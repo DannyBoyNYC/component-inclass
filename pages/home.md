@@ -1,5 +1,5 @@
 ---
-layout: layouts/layout.html
+layout: layouts/home.html
 pageTitle: Home
 navTitle: Home
 date: 2010-01-01

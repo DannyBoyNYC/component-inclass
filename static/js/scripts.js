@@ -15,6 +15,7 @@ function clickHandlers(){
     const iFrame = document.querySelector('iframe');
     const videoLinks = document.querySelectorAll('.content-video a');
     videoLinks.forEach(videoLink => videoLink.classList.remove('active'));
+    console.log(videoLinks)
     event.target.classList.add('active');
     const videoToPlay = event.target.getAttribute('href');
     iFrame.setAttribute('src', videoToPlay);
@@ -34,7 +35,9 @@ var addContent = function(data){
       </div>
       `
   }
-  document.querySelector('.content div').innerHTML = looped
+  if (document.querySelector('.content .blog')) {
+    document.querySelector('.content .blog').innerHTML = looped
+  }
 }
 
 var getData = function () {
