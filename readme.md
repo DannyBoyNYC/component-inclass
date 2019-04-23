@@ -61,29 +61,150 @@ Be sure to run `git status` before switching or merging branches.
 
 Review the interdependencies between content (the pages folder) and layouts.
 
+## JavaScript
+
+Here is the script fro the image viewer page:
+
+```js
+const carouselLinks = document.querySelectorAll('.image-tn a');
+const carousel = document.querySelector('figure img');
+const carouselPara = document.querySelector('figcaption');
+
+carouselLinks.forEach(carouselLink =>
+  carouselLink.addEventListener('click', runCarousel),
+);
+
+function runCarousel() {
+  const imageHref = event.target.parentNode.getAttribute('href');
+  const titleText = event.target.title;
+  carousel.setAttribute('src', imageHref);
+  carouselPara.innerHTML = titleText;
+  event.preventDefault();
+}
+```
+
+We will refactor it to use event delegation.
+
+First - comment out the script above.
+
+Let's see what we are clicking on when we click on a thumbnail.
+
+```js
+function clickHandlers() {
+  console.log(event.target);
+  if (event.target.matches('#pull')){
+    document.querySelector('body').classList.toggle('show-nav');
+    event.preventDefault();
+  }
+  if (event.target.matches('.content-video a')){
+    videoSwitch()
+    event.preventDefault();
+  } 
+  event.preventDefault();
+}
+```
+
+We are getting the image node.
+
+
+Block the default event on the click:
+
+```js
+function clickHandlers() {
+  if (event.target.matches('#pull')){
+    document.querySelector('body').classList.toggle('show-nav');
+    event.preventDefault();
+  }
+  if (event.target.matches('.content-video a')){
+    videoSwitch()
+    event.preventDefault();
+  } else if (event.target.matches('.image-tn img')) {
+    event.preventDefault();
+  }
+}
+```
+
+Add a function:
+
+```js
+function runCarousel() {
+  const imageHref = event.target.parentNode.getAttribute('href');
+  console.log(imageHref);
+}
+```
+
+and a call to that function
+
+```js
+else if (event.target.matches('.image-tn img')) {
+  runCarousel()
+  event.preventDefault();
+}
+```
+
+Our clicks now capture the href value of the linked thumbnails.
+
+Capture the title text:
+
+```js
+function runCarousel() {
+  const imageHref = event.target.parentNode.getAttribute('href');
+  const titleText = event.target.title;
+  console.log(titleText)
+}
+```
+
+Finallly, use those two variables to set the large image and caption:
+
+```js
+function runCarousel() {
+  const imageHref = event.target.parentNode.getAttribute('href');
+  const titleText = event.target.title;
+  document.querySelector('figure img').setAttribute('src', imageHref);
+  document.querySelector('figcaption').innerHTML = titleText;
+}
+```
+
+Compare the commented out function. Note how simpler and maintainable the event delegation sysstem is.
+
 ## Forms
 
 Use the following in the `contact.html` component:
 
 ```html
 <form name="contact" method="POST" action="/" autocomplete="true">
-<fieldset>
-  
-  <input type="text" name="name" id="name" required autocomplete = "off" />
-  <label for="name">Your name</label>
- 
-  <input type="email" name="email" id="email" required autocomplete = "off"   />
-   <label for="email">Email address</label>
-
-  
-  <textarea name="message" id="message" placeholder="Your message" rows="7"></textarea>
-  <label for="message">Your message</label>
-  <button type="submit" name="submit">Send Message</button>
+  <fieldset>
+    
+    <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" />
+    <label for="name">Your name</label>
+    
+    <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
+    <label for="email">Email address</label>
+    
+    <textarea name="message" id="message" placeholder="Your message" rows="7"></textarea>
+    <label for="message">Your message</label>
+    
+    <button type="submit" name="submit">Send Message</button>
+    
   </fieldset>
 </form>
 ```
 
-Bring the form into the layout via `contact.md`:
+Let get the form onto our page before we examine it.
+
+Create a layout which includes the form, `layouts/contact.html`:
+
+```yml
+---
+layout: layouts/layout.html
+---
+
+<article>
+  {% include components/contact.html %}
+</article>
+```
+
+Edit the content `contact.md`:
 
 ```yml
 ---
@@ -92,53 +213,59 @@ pageTitle: Contact Us
 navTitle: Contact
 date: 2019-04-01
 ---
+
+## Why contact us?
+
+Not certain if we'll ever get back to you but its worth a try.
 ```
 
-and `layouts/video.html`:
+Add a content block to the template:
 
-```yml
----
-layout: layouts/layout.html
----
+`{{ content }}`
 
-{% include components/video-article.html %}
+### Form Elements
 
-{{ content }}
-```
-
-
-`form`:
-
-* action - Specifies where to send the form-data when a form is submitted
-* autocomplete - Specifies whether a form should have autocomplete on or off
-* method - Specifies the HTTP method to use when sending form-data
-* name - Specifies the name of a form
+`<form>`:
+* action - specifies where to send the user when a form is submitted
+* autocomplete - specifies whether a form should have autocomplete on or off
+* method - specifies the HTTP method to use when sending form-data
+* name - specifies the name of a form
 * novalidate - turns validation off, typically used when you provide your own custom validations routines
 
-`fieldset`: not really needed here. Allows the form to be split into multiple sections (e.g. shipping, billing)
+`<fieldset>`:  
+* allows the form to be split into multiple sections (e.g. shipping, billing)
+* not really needed here
 
-`label`: The for attribute of the `<label>` tag should be equal to the id attribute of the related element to bind them together
+`<label>`:
+* identifies the field's purpose to the user
+* the `for` attribute of the `<label>` tag should be the same as the id attribute of the related input to bind them together
 
-`input`: Specifies an input field where the user can enter data. Is empty and consists of attributes only.
-
+`<input>`: 
+* specifies an input field where the user can enter data. 
 * can accept autocomplete and autofocus
-* name - Specifies the name of an <input> element used to reference elements in a JavaScript, or to reference form data after a form is submitted
-* type - the [most complex](https://www.w3schools.com/tags/att_input_type.asp) attribute, determines the nature of the input
-* required - works with native HTML5 validation
-* placeholder - the text the user sees before typing
-* pattern - Specify a [regular expression](https://www.w3schools.com/TAGS/att_input_pattern.asp) that the `<input>` element's value is checked against on form submission
-* title - use with pattern to specify extra information about an element, not form specific, often shown as a tooltip text, here - describes the pattern to help the user
+* is empty (`/>`) and consists of attributes only
 
-Initial CSS:
+`<input>` attributes:
+* `name` - Specifies the name of an `<input>` element used to reference form data after a form is submitted
+* `type` - the [most complex](https://www.w3schools.com/tags/att_input_type.asp) attribute, determines the nature of the input
+* `required` - works with native HTML5 validation
+* `placeholder` - the text the user sees before typing
+
+Additional input attributes we will be using:
+* `pattern` - uses a [regular expression](https://www.w3schools.com/TAGS/att_input_pattern.asp) that the `<input>` element's value is checked against on form submission
+* `title` - use with pattern to specify extra information about an element, not form specific, often shown as a tooltip text, here - describes the pattern to help the user
+
+### Form CSS
+
+Create and link a new sass partial called `_form.scss`:
 
 ```css
 form {
-  display: grid;
   padding: 2em 0;
 }
 
 form label {
-  display: none;
+  /* display: none; */
 }
 
 input,
@@ -152,7 +279,7 @@ button {
 
 input,
 textarea {
-  border: 1px solid #666;
+  border: 1px solid $med-gray;
 }
 
 button {
@@ -162,6 +289,40 @@ button {
   cursor: pointer;
 }
 ```
+
+Note that I have placed the labels after the inputs. Placing them before would be more common.
+
+Edit the first field:
+
+```html
+<input type="text" name="name" id="name" required autocomplete="name" title="Please enter your name" />
+<label for="name">Name</label>
+```
+
+Note the tooltip and autocomplete action.
+
+Edit the second field:
+
+
+```html
+<input type="email" name="email" id="email" autocomplete="email" title="The domain portion of the email address is invalid (the portion after the @)." pattern="^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$" required />
+  <label for="email">Email</label>
+```
+
+Edit the textarea:
+
+```html
+<textarea name="message" id="message" placeholder="Write your message here" rows="7" required></textarea>
+<label for="message">Message</label>
+```
+
+Add a data attribute to allow Netlify to process the posting:
+
+```html
+<form name="contact" method="POST" data-netlify="true" action="/">
+```
+
+The form will not function correctly on localhost. Deploy and test the deployed form.
 
 Ender:
 
@@ -183,9 +344,9 @@ Ender:
 </form>
 ```
 
-Try:
+<!-- Try:
 
-`autocomplete="off"`
+`autocomplete="off"` -->
 
 Label effect:
 

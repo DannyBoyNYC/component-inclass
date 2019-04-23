@@ -1,41 +1,32 @@
-const carouselLinks = document.querySelectorAll('.image-tn a');
-const carousel = document.querySelector('figure img');
-const carouselPara = document.querySelector('figcaption');
+document.addEventListener('click', clickHandlers)
 
-carouselLinks.forEach(carouselLink =>
-  carouselLink.addEventListener('click', runCarousel),
-);
+function clickHandlers() {
+  if (event.target.matches('#pull')){
+    document.querySelector('body').classList.toggle('show-nav');
+    event.preventDefault();
+  } else if (event.target.matches('.content-video a')){
+    videoSwitch()
+    event.preventDefault();
+  } else if (event.target.matches('.image-tn img')) {
+    runCarousel()
+    event.preventDefault();
+  }
+}
 
 function runCarousel() {
   const imageHref = event.target.parentNode.getAttribute('href');
   const titleText = event.target.title;
-  carousel.setAttribute('src', imageHref);
-  carouselPara.innerHTML = titleText;
-  event.preventDefault();
-}
-
-//////
-
-document.addEventListener('click', clickHandlers)
-
-function clickHandlers(){
-  if (event.target.matches('#pull')){
-    document.querySelector('body').classList.toggle('show-nav');
-    event.preventDefault();
-  }
-  if (event.target.matches('.content-video a')){
-    videoSwitch()
-    event.preventDefault();
-  }
+  document.querySelector('figure img').setAttribute('src', imageHref);
+  document.querySelector('figcaption').innerHTML = titleText;
 }
 
 var videoSwitch = function () {
   const iFrame = document.querySelector('iframe');
-    const videoLinks = document.querySelectorAll('.content-video a');
-    videoLinks.forEach(videoLink => videoLink.classList.remove('active'));
-    event.target.classList.add('active');
-    const videoToPlay = event.target.getAttribute('href');
-    iFrame.setAttribute('src', videoToPlay);
+  const videoLinks = document.querySelectorAll('.content-video a');
+  videoLinks.forEach(videoLink => videoLink.classList.remove('active'));
+  event.target.classList.add('active');
+  const videoToPlay = event.target.getAttribute('href');
+  iFrame.setAttribute('src', videoToPlay);
 }
 
 // Fetch data from NYTimes
