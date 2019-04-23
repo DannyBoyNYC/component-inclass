@@ -461,7 +461,7 @@ button {
 
 [Headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system) - a back-end only content management system built from the ground up as a content repository that makes content accessible via a RESTful API for display on any device.
 
-[Netlify CMS](https://www.netlifycms.org/)
+[Netlify CMS](https://www.netlifycms.org/). Another choice might be [Forestry.io](Forestry.io)
 
 https://www.netlifycms.org/docs/add-to-your-site/
 
