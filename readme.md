@@ -1,6 +1,6 @@
 # X - Components and Forms
 
-The Master branch of this repo is where we left off in session 8. The Master branch is being deployed to Netlify.
+The Master branch of this repo is where we left off in session 9. The dev branch is being deployed to Netlify.
 
 ## Exercise continued - Site Redesign
 
@@ -176,10 +176,26 @@ Use the following in the `contact.html` component:
   <fieldset>
     
     <label for="name">Your name</label>
+<<<<<<< HEAD
     <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" />
     
     <label for="email">Email address</label>
     <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
+=======
+    <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" autofocus />
+    
+    <label for="email">Email address</label>
+    <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
+
+    <label for="website">Website</label> 
+		<input type="url" name="website" required placeholder="http://www.example.com" />
+
+		<label for="number">Number</label> 
+		<input type="number" name="number" min="0" max="10" step="2" required placeholder="Even num < 10">
+
+		<label for="range">Range</label> 
+		<input type="range" name="range" min="0" max="10" step="2" />
+>>>>>>> local
     
     <label for="message">Your message</label>
     <textarea name="message" id="message" placeholder="Your message" rows="7"></textarea>
@@ -190,7 +206,7 @@ Use the following in the `contact.html` component:
 </form>
 ```
 
-Let get the form onto our page before we examine it.
+Let's get the form onto our page before we examine it.
 
 Create a layout which includes the form, `layouts/contact.html`:
 
@@ -280,6 +296,7 @@ button {
 input,
 textarea {
   border: 1px solid $med-gray;
+  border-radius: 5px;
 }
 
 button {
@@ -290,7 +307,35 @@ button {
 }
 ```
 
-Note that I have placed the labels after the inputs. Placing them before would be more common.
+There are a number of css pseudo selectors and techniques that can be used with forms:
+
+```css
+input:focus, textarea:focus {
+  box-shadow:0 0 15px lighten( $link, 40% );
+}
+
+input:not(:focus), textarea:not(:focus) {
+  opacity:0.35;
+}
+
+input:required, textarea:required {
+  background-color: lighten( $link, 60% );					
+}
+
+input:valid, textarea:valid {
+  background-color: lighten( green, 60% );			
+}
+
+input:invalid, textarea:invalid {
+  background-color: lighten( red, 40% );					
+}
+
+input:focus:invalid, textarea:focus:invalid {
+  background-color: lighten( red, 40% );					
+}
+```
+
+DELETE THE FORM FIELDS LEAVING ONLY THE BUTTON.
 
 Edit the first field:
 
@@ -300,6 +345,8 @@ Edit the first field:
 ```
 
 Note the tooltip and autocomplete action.
+
+Note that I have placed the labels after the inputs. Placing them before would be more common.
 
 Edit the second field:
 
@@ -322,9 +369,11 @@ Add a data attribute to allow Netlify to process the posting:
 <form name="contact" method="POST" data-netlify="true" action="/">
 ```
 
-The form will not function correctly on localhost. Deploy and test the deployed form.
+Note: the form will not function correctly on localhost. Deploy and test the deployed form.
 
-Ender:
+https://www.netlify.com/docs/form-handling/
+
+End form:
 
 ```html
 <form name="contact" method="POST" data-netlify="true" action="/">
@@ -344,9 +393,7 @@ Ender:
 </form>
 ```
 
-<!-- Try:
-
-`autocomplete="off"` -->
+### CSS for Material Design Form
 
 Label effect:
 
@@ -417,35 +464,6 @@ button {
 }
 ```
 
-https://www.netlify.com/docs/form-handling/
-
-`data-netlify="true"`
-
-Component: `contact.html`
-
-Page: `contact.md`
-
-```md
----
-layout: layouts/contact.html
-pageTitle: Contact Us
-navTitle: Contact
-date: 2019-04-01
----
-
-[Home](/)
-```
-
-Layout: `contact.html`
-
-```html
----
-layout: layouts/layout.html
----
-
-{% include components/contact.html %}
-```
-
 ## Content Management
 
 [Headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system) - a back-end only content management system built from the ground up as a content repository that makes content accessible via a RESTful API for display on any device.
@@ -459,8 +477,8 @@ https://github.com/danurbanowicz/eleventy-netlify-boilerplate/blob/master/admin/
 
 ## Notes
 
-js ajax and localstorage
+localstorage
 
-prefetching and rendering the data
+
 
 
