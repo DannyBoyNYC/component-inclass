@@ -1,6 +1,6 @@
 # X - Components and Forms
 
-The Master branch of this repo is where we left off in session 8. The Master branch is being deployed to Netlify.
+The Master branch of this repo is where we left off in session 9. The dev branch is being deployed to Netlify.
 
 ## Exercise continued - Site Redesign
 
