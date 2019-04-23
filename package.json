@@ -6,13 +6,14 @@
   "scripts": {
     "eleventy": "eleventy --serve",
     "sass": "sass ignore/scss/styles.scss static/css/styles.css --watch --source-map --style=compressed",
-    "start": "npm run eleventy & npm run sass"
+    "start": "concurrently \"npm run eleventy\" \"npm run sass\" "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@11ty/eleventy": "^0.7.1",
-    "sass": "^1.17.3"
+    "sass": "^1.17.3",
+    "concurrently": "^4.1.0"
   }
 }
