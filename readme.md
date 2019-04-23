@@ -362,9 +362,9 @@ Add a data attribute to allow Netlify to process the posting:
 <form name="contact" method="POST" data-netlify="true" action="/">
 ```
 
-Note: the form will not function correctly on localhost. Deploy and test the deployed form.
+Note: the form will not function correctly on localhost. 
 
-https://www.netlify.com/docs/form-handling/
+In order to run the form locally we might try installing [Netlify Dev](https://www.netlify.com/products/dev/) but for today we'll deploy and test the deployed form.
 
 End form:
 
