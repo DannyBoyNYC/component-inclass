@@ -175,14 +175,14 @@ Use the following in the `contact.html` component:
 <form name="contact" method="POST" action="/" autocomplete="true">
   <fieldset>
     
-    <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" />
     <label for="name">Your name</label>
+    <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" />
     
-    <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
     <label for="email">Email address</label>
+    <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
     
-    <textarea name="message" id="message" placeholder="Your message" rows="7"></textarea>
     <label for="message">Your message</label>
+    <textarea name="message" id="message" placeholder="Your message" rows="7"></textarea>
     
     <button type="submit" name="submit">Send Message</button>
     
