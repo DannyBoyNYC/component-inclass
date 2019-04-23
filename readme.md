@@ -175,14 +175,14 @@ Use the following in the `contact.html` component:
 <form name="contact" method="POST" action="/" autocomplete="true">
   <fieldset>
     
-    <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" />
     <label for="name">Your name</label>
+    <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" />
     
-    <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
     <label for="email">Email address</label>
+    <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
     
-    <textarea name="message" id="message" placeholder="Your message" rows="7"></textarea>
     <label for="message">Your message</label>
+    <textarea name="message" id="message" placeholder="Your message" rows="7"></textarea>
     
     <button type="submit" name="submit">Send Message</button>
     
@@ -322,9 +322,11 @@ Add a data attribute to allow Netlify to process the posting:
 <form name="contact" method="POST" data-netlify="true" action="/">
 ```
 
+https://www.netlify.com/docs/form-handling/
+
 The form will not function correctly on localhost. Deploy and test the deployed form.
 
-Ender:
+End form:
 
 ```html
 <form name="contact" method="POST" data-netlify="true" action="/">
@@ -344,9 +346,7 @@ Ender:
 </form>
 ```
 
-<!-- Try:
-
-`autocomplete="off"` -->
+### CSS for Material Design Form
 
 Label effect:
 
@@ -415,35 +415,6 @@ button {
   color: #fff;
   cursor: pointer;
 }
-```
-
-https://www.netlify.com/docs/form-handling/
-
-`data-netlify="true"`
-
-Component: `contact.html`
-
-Page: `contact.md`
-
-```md
----
-layout: layouts/contact.html
-pageTitle: Contact Us
-navTitle: Contact
-date: 2019-04-01
----
-
-[Home](/)
-```
-
-Layout: `contact.html`
-
-```html
----
-layout: layouts/layout.html
----
-
-{% include components/contact.html %}
 ```
 
 ## Content Management
