@@ -1,19 +1,12 @@
-# IX - Components
+# X - Components and Forms
 
-The Master branch of this repo is where we left off in session 8. The dev branch is being deployed to Netlify.
+The Master branch of this repo is where we left off in session 8. The Master branch is being deployed to Netlify.
 
 Log in to Github ** _Download the zip file_ ** and create an empty repo called components.
 
-## Homework
-
-Work on your final project.
-
-## Review
-
-* `https://www.11ty.io/docs/starter/`
-* `https://session9-components.netlify.com/`
-
 ## Exercise continued - Site Redesign
+
+Here is where we left off in session 10 - https://session10.netlify.com
 
 `cd` into `component-master` and initialize a repository:
 
