@@ -176,18 +176,18 @@ Use the following in the `contact.html` component:
   <fieldset>
     
     <label for="name">Your name</label>
-    <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" />
+    <input type="text" name="name" id="name" placeholder="Name" required autocomplete = "off" autofocus />
     
     <label for="email">Email address</label>
     <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
 
-    <label for="website">Website:</label> 
+    <label for="website">Website</label> 
 		<input type="url" name="website" required placeholder="http://www.example.com" />
 
-		<label for="number">Number:</label> 
+		<label for="number">Number</label> 
 		<input type="number" name="number" min="0" max="10" step="2" required placeholder="Even num < 10">
 
-		<label for="range">Range:</label> 
+		<label for="range">Range</label> 
 		<input type="range" name="range" min="0" max="10" step="2" />
     
     <label for="message">Your message</label>
@@ -199,7 +199,7 @@ Use the following in the `contact.html` component:
 </form>
 ```
 
-Let get the form onto our page before we examine it.
+Let's get the form onto our page before we examine it.
 
 Create a layout which includes the form, `layouts/contact.html`:
 
@@ -289,6 +289,7 @@ button {
 input,
 textarea {
   border: 1px solid $med-gray;
+  border-radius: 5px;
 }
 
 button {
@@ -299,7 +300,35 @@ button {
 }
 ```
 
-Note that I have placed the labels after the inputs. Placing them before would be more common.
+There are a number of css pseudo selectors and techniques that can be used with forms:
+
+```css
+input:focus, textarea:focus {
+  box-shadow:0 0 15px lighten( $link, 40% );
+}
+
+input:not(:focus), textarea:not(:focus) {
+  opacity:0.35;
+}
+
+input:required, textarea:required {
+  background-color: lighten( $link, 60% );					
+}
+
+input:valid, textarea:valid {
+  background-color: lighten( green, 60% );			
+}
+
+input:invalid, textarea:invalid {
+  background-color: lighten( red, 40% );					
+}
+
+input:focus:invalid, textarea:focus:invalid {
+  background-color: lighten( red, 40% );					
+}
+```
+
+DELETE THE FORM FIELDS LEAVING ONLY THE BUTTON.
 
 Edit the first field:
 
@@ -309,6 +338,8 @@ Edit the first field:
 ```
 
 Note the tooltip and autocomplete action.
+
+Note that I have placed the labels after the inputs. Placing them before would be more common.
 
 Edit the second field:
 
@@ -331,9 +362,9 @@ Add a data attribute to allow Netlify to process the posting:
 <form name="contact" method="POST" data-netlify="true" action="/">
 ```
 
-https://www.netlify.com/docs/form-handling/
+Note: the form will not function correctly on localhost. Deploy and test the deployed form.
 
-The form will not function correctly on localhost. Deploy and test the deployed form.
+https://www.netlify.com/docs/form-handling/
 
 End form:
 
@@ -439,8 +470,8 @@ https://github.com/danurbanowicz/eleventy-netlify-boilerplate/blob/master/admin/
 
 ## Notes
 
-js ajax and localstorage
+localstorage
 
-prefetching and rendering the data
+
 
 
