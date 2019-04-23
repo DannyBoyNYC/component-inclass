@@ -180,6 +180,15 @@ Use the following in the `contact.html` component:
     
     <label for="email">Email address</label>
     <input type="email" name="email" id="email" placeholder="Email" required autocomplete = "off"   />
+
+    <label for="website">Website:</label> 
+		<input type="url" name="website" required placeholder="http://www.example.com" />
+
+		<label for="number">Number:</label> 
+		<input type="number" name="number" min="0" max="10" step="2" required placeholder="Even num < 10">
+
+		<label for="range">Range:</label> 
+		<input type="range" name="range" min="0" max="10" step="2" />
     
     <label for="message">Your message</label>
     <textarea name="message" id="message" placeholder="Your message" rows="7"></textarea>
